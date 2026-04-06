@@ -1,0 +1,170 @@
+@api = http://localhost:4000
+@token = Bearer YOUR_TOKEN_HERE
+
+### Health
+GET {{api}}/health
+
+### Login (admin)
+POST {{api}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@college.local",
+  "password": "admin123"
+}
+
+### Create Department
+POST {{api}}/api/v1/master/departments
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "Computer Science",
+  "code": "CSE"
+}
+
+### Create Shift
+POST {{api}}/api/v1/setup/shifts
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "Morning",
+  "startTime": "08:00",
+  "endTime": "13:00",
+  "dayStart": "MONDAY",
+  "dayEnd": "FRIDAY"
+}
+
+### Create Program
+POST {{api}}/api/v1/setup/programs
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "B.Tech Computer Science",
+  "code": "BTECH_CSE",
+  "departmentId": "dept-id",
+  "durationYears": 4
+}
+
+### Create Batch
+POST {{api}}/api/v1/setup/batches
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "CSE-2023-Batch-A",
+  "programId": "prog-id",
+  "academicYear": "2023-2024",
+  "semester": 3,
+  "studentCount": 60,
+  "departmentId": "dept-id",
+  "shiftId": "shift-id"
+}
+
+### Create Subject
+POST {{api}}/api/v1/setup/subjects
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "Database Systems",
+  "code": "CS303",
+  "programId": "prog-id",
+  "credits": 4,
+  "semester": 3,
+  "theoryHours": 3,
+  "practicalHours": 2
+}
+
+### Create Faculty
+POST {{api}}/api/v1/setup/faculty
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "departmentId": "dept-id",
+  "specialization": "Databases",
+  "qualification": "PhD",
+  "teachingLoadMax": 24
+}
+
+### Create Classroom
+POST {{api}}/api/v1/master/classrooms
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "name": "Lab-1",
+  "capacity": 60,
+  "departmentId": "dept-id",
+  "isLab": true
+}
+
+### Add Faculty Availability
+POST {{api}}/api/v1/constraints/faculty-availability
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "facultyId": "fac-1",
+  "dayOfWeek": "MONDAY",
+  "startTime": "09:00",
+  "endTime": "12:00",
+  "availabilityType": "AVAILABLE"
+}
+
+### Create Fixed Class
+POST {{api}}/api/v1/constraints/fixed-classes
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "batchId": "batch-1",
+  "subjectId": "subject-1",
+  "facultyId": "fac-1",
+  "classroomId": "room-1",
+  "dayOfWeek": "MONDAY",
+  "startTime": "10:00",
+  "endTime": "11:00",
+  "classType": "LECTURE",
+  "locked": true
+}
+
+### Optimize (with database-assembled input)
+POST {{api}}/api/v1/optimize
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "departmentId": "CSE",
+  "shiftId": "MORNING",
+  "semester": 3,
+  "academicYear": "2026-2027",
+  "optionsCount": 3
+}
+
+### List Departments
+GET {{api}}/api/v1/master/departments
+Authorization: {{token}}
+
+### List Shifts
+GET {{api}}/api/v1/setup/shifts
+Authorization: {{token}}
+
+### List Programs
+GET {{api}}/api/v1/setup/programs
+Authorization: {{token}}
+
+### List Batches
+GET {{api}}/api/v1/setup/batches
+Authorization: {{token}}
+
+### List Subjects
+GET {{api}}/api/v1/setup/subjects
+Authorization: {{token}}
+
+### List Faculty
+GET {{api}}/api/v1/setup/faculty
+Authorization: {{token}}
